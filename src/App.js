@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
+import axios from 'axios'
+import cheerio from 'cheerio'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+class App extends Component {
+  state = {
+    news: ''
+  }
+
+  handleGetArticles = event =>{
+    console.log('ping')
+    axios.get('https://www.nytimes.com/section/world/asia')
+      .then(({data})=>{
+        const $ = cheerio.load(data)
+        console.log(data)
+      })
+  }
+  render(){
+    return(
+      <>
+      <h1>React Mongo Scrappppinggg</h1>
+      <button onClick={this.handleGetArticles}>Get Articles</button>
+      </>
+      )
+    }
+  }
+
 
 export default App;
